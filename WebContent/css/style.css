@@ -1,0 +1,87 @@
+@CHARSET "UTF-8";
+
+
+
+body {
+	background: #ccf4cc;
+	height: 100%;
+	line-height: 20px;
+	word-break: break-all;
+	padding: 30px;
+
+}
+
+.login {
+	background:white;
+	width: 600px;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #cccccc;
+	margin: 40px auto;
+}
+
+.search {
+	background:white;
+	width: 600px;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #cccccc;
+	margin: 40px auto;
+}
+
+.messages {
+	text-align: center;
+}
+
+.title {
+	font-weight: bold;
+	font-size:x-large;
+}
+
+.body{
+	font-size:large;
+}
+
+.userName {
+	font-size:small;
+}
+
+.errorMessages {
+	color:red;
+	font-weight:bold;
+	font-size:large;
+}
+.newMessage {
+	background:white;
+	width: 900px;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #cccccc;
+	margin: 40px auto;
+
+}
+
+.table th {
+	  background-color: #cccccc;
+	  width: 200px;
+		padding: 10px;
+}
+
+
+.table td{
+	background-color: white;
+	width: 900px;
+	text-align: center;
+
+}
+
+.signup {
+	background:white;
+	width: 600px;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #cccccc;
+	margin: 40px auto;
+
+
+}
