@@ -29,6 +29,7 @@ public class UserDao {
 			ps.setString(2, password);
 
 			ResultSet rs = ps.executeQuery();
+
 			List<User> userList = toUserList(rs);
 			if (userList.isEmpty() == true) {
 				return null;
@@ -199,7 +200,7 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try{
-			String sql = "SELECT * FROM user_view ;";
+			String sql = "SELECT * FROM user_view ORDER BY branch_id, department_id ASC ";
 
 			ps = connection.prepareStatement(sql);
 
@@ -221,7 +222,9 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try {
+
 			String sql = "SELECT * FROM bulletin_board.users WHERE id=? ";
+
 
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id);
@@ -285,7 +288,11 @@ public class UserDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE users SET");
 			sql.append(" login_id = ?");
-			sql.append(", password = ?");
+
+			if (! user.getPassword().isEmpty()) {
+				sql.append(", password = ?");
+			}
+
 			sql.append(", name = ?");
 			sql.append(", branch_id = ?");
 			sql.append(", department_id = ?");
@@ -297,11 +304,19 @@ public class UserDao {
 			ps = connection.prepareStatement(sql.toString());
 
 			ps.setString(1, user.getLogin_id());
-			ps.setString(2, user.getPassword());
-			ps.setString(3, user.getName());
-			ps.setString(4, user.getBranch_id());
-			ps.setString(5, user.getDepartment_id());
-			ps.setInt(6, user.getId());
+
+			if (! user.getPassword().isEmpty()) {
+				ps.setString(2, user.getPassword());
+				ps.setString(3, user.getName());
+				ps.setString(4, user.getBranch_id());
+				ps.setString(5, user.getDepartment_id());
+				ps.setInt(6, user.getId());
+			} else {
+				ps.setString(2, user.getName());
+				ps.setString(3, user.getBranch_id());
+				ps.setString(4, user.getDepartment_id());
+				ps.setInt(5, user.getId());
+			}
 			System.out.println(ps.toString());
 
 			int count = ps.executeUpdate();
@@ -315,7 +330,46 @@ public class UserDao {
 		} finally {
 				close(ps);
 		}
+	}
 
+	public List<User> getUserManagementList(Connection connection, int limitNum) {
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * FROM users");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ResultSet rs = ps.executeQuery();
+			List<User> ret = toUserList(rs);
+			return ret;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
 
 	}
+
+	public void deleteUser(Connection connection, int id) {
+		PreparedStatement ps = null;
+
+		try{
+			StringBuilder sql = new StringBuilder();
+			sql.append("delete from users where id = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+			ps.setInt(1, id);
+
+			if((ps.executeUpdate()) == 0){
+				throw new NoRowsUpdatedRuntimeException();
+			}
+		}catch(SQLException e){
+			throw new SQLRuntimeException(e);
+		}finally{
+			close(ps);
+		}
+
+	}
+
 }

@@ -12,8 +12,8 @@
 <body>
 
 <c:if test="${loginUser.department_id == 1 }">
-	<a href="userManagement">◆ホーム</a>
-
+	<a href="userManagement">戻る</a>
+<center><h2>新規ユーザー登録</h2></center>
 <div class= "main-contents">
 <c:if test= "${ not empty errorMessages }">
 	<div class = "errorMessages">
@@ -39,7 +39,7 @@
 	<label for="name">名前(10文字以下)</label><br>
 	<input name="name" value="${ errorUser.name }" id="name" /><br/>
 
-	<label for="branch_id">支店</label>
+	<label for="branch_id">支店</label><br>
 	<select name="branch_id">
 		<option value="0">選択してください</option>
 		<c:forEach items="${ branches }" var="branch">
@@ -53,7 +53,7 @@
 	</select>
 	<br/>
 
-	<label for="department_id">部署・役職</label>
+	<label for="department_id">部署・役職</label><br>
 	<select name="department_id">
 		<option value="0">選択してください</option>
 		<c:forEach items="${ departments }" var="department">
@@ -64,7 +64,7 @@
 			<option value="${ department.id}">${ department.name }</option></c:if>
 		</c:forEach>
 	</select>
-	<br/>
+	<br/><br><br>
 
 	<input type="submit" value="登録"/> <br/><br>
 

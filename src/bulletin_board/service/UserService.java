@@ -133,6 +133,7 @@ public class UserService {
 
 	}
 
+
 	public void update (User user) {
 		Connection connection = null;
 
@@ -155,6 +156,24 @@ public class UserService {
 		}finally{
 			close(connection);
 		}
+	}
+
+	public void deleteUser(int id) {
+		Connection connection = getConnection();
+		try{
+
+			new UserDao().deleteUser(connection, id);
+			commit(connection);
+		}catch(RuntimeException e){
+			rollback(connection);
+			throw e;
+		}catch(Error e){
+			rollback(connection);
+			throw e;
+		}finally{
+			close(connection);
+		}
+
 	}
 
 

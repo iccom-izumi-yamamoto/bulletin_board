@@ -47,7 +47,6 @@ public class CommentServlet extends HttpServlet {
 			comment.setUser_id(user.getId());
 
 			new CommentService().register(comment);
-
 			response.sendRedirect("./top");
 		} else {
 //			System.out.println("ps.toString()");

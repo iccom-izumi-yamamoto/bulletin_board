@@ -13,12 +13,17 @@
 
 <div class="login">
 <h1>BSG掲示板システム</h1>
+<hr>
+
+
+
+
 
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 
 			<c:forEach items="${ errorMessages }" var="message">
-				<li><c:out value="${ message }"/>
+				<c:out value="${ message }"/><br>
 			</c:forEach>
 
 	</div>
@@ -26,16 +31,14 @@
 </c:if>
 
 
-
 <form action="login" method="post"><br/>
-	<label for="login_id">ログインID</label>
-	<input name="login_id"value="${ errorLogin }" id="login_id"/><br/>
+<label for="login_id">ログインID</label><br>
+<input name="login_id"value="${ errorLogin }" id="login_id"/><br/><br>
 
-	<label for="password">パスワード</label>
-	<input name="password" type="password" id="password" /> <br/>
-
+<label for="password">パスワード</label><br>
+<input name="password" type="password" id="password" /> <br/>
+<br>
 	<input type="submit" value="ログイン"/> <br/>
-	<a href = "./top">戻る</a>
 </form>
 
 </div>

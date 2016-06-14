@@ -44,11 +44,12 @@ public class UserManagementServlet extends HttpServlet {
 		String submit = request.getParameter("submit");
 		String name = editUser.getName();
 
-		if(submit.equals("停止")){
+		if(submit.equals("停止") ){
 			messages.add(name + "さんを稼動停止しました");
 		}else{
 			messages.add(name + "さんの利用を再開しました");
 		}
+
 
 		HttpSession session = request.getSession();
 		session.setAttribute("errorMessages", messages);

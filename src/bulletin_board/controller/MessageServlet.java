@@ -51,6 +51,15 @@ public class MessageServlet extends HttpServlet {
 
 			response.sendRedirect("./top");
 		} else {
+			User user = (User) session.getAttribute("loginUser");
+
+			Message errorContribution = new Message();
+			errorContribution.setTitle(request.getParameter("title"));
+			errorContribution.setBody(request.getParameter("body"));
+			errorContribution.setCategory (request.getParameter("category"));
+			errorContribution.setUser_id(user.getId());
+
+			session.setAttribute("errorContribution", errorContribution);
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("newMessage");
 		}

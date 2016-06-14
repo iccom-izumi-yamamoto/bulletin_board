@@ -11,12 +11,13 @@
 <title>新規投稿</title>
 </head>
 <body>
+
 <c:if test="${empty loginUser }">
 ログインしてください。<br>
-
+<a href="./top">戻る</a>
 </c:if>
 
-<a href="./top">◆ホーム</a>
+<a href="./top">戻る</a>
 <div class= "main-contents">
 <c:if test="${ not empty loginUser }">
 <c:if test= "${ not empty errorMessages }">
@@ -30,32 +31,33 @@
 	<c:remove var="errorMessages" scope="session" />
 </c:if>
 
+<center><h2>新規投稿</h2></center>
+
 <div class="newMessage">
 <form action="newMessage" method="post"><br>
 	件名(50文字以下)<br/>
-	<input name="title" maxlength=50><c:out value="${ errorUser.title }"/>
+	<textarea name="title" rows="1" cols="50"><c:out value="${ errorContribution.title }"/></textarea>
 	<br/>
 	<br/>
 
 	本文(1000文字以下)<br/>
-	<textarea name="body" rows="10" cols="100" >
-	<c:out value="${ errorUser.body }"/></textarea>
+	<textarea style="width:70%;height:90px" name="body" rows="10" cols="100" wrap="hard"><c:out value="${ errorContribution.body }"/></textarea>
 	<br/>
 	<br/>
 
 	カテゴリー(10文字以下)<br/>
-	<input name="category" maxlength=10 >
-	<c:out value="${ errorUser.category }"/>
+	<input name="category" maxlength=10 value="${ errorContribution.category }"/>
 	<br/>
 	<br/>
 
 	<input type="submit" value="投稿する">
 	<br/>
 
-
+<c:remove var="errorContribution" scope="session"/>
 </form>
 </div>
 </c:if>
+
 </div>
 <br>
 <br>

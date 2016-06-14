@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class ="main-contents">
-
+<c:if test="${ not empty loginUser && loginUser.department_id == 1 }">
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 		<ul>
@@ -22,7 +22,7 @@
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
-
+<div class="settings">
 <form action="settings" method="post"><br/>
 
 	<input name="id" type="hidden" id="id" value="${editedUser.id}"/>
@@ -68,6 +68,14 @@
 	<input type="submit" value="登録"/> <br/><br>
 	<a href="./userManagement">戻る</a>
 </form>
+</div>
+</c:if>
+
+<c:if test="${ empty loginUser || loginUser.department_id != 1 }">
+	アクセス権限のないユーザーです。<br><br>
+	<a href="./top">戻る</a>
+</c:if>
+
 </div>
 </body>
 </html>

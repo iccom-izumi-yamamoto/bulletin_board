@@ -1,7 +1,10 @@
 
 package bulletin_board.controller;
 
+import static bulletin_board.utils.DBUtil.*;
+
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import bulletin_board.beans.Branch;
 import bulletin_board.beans.Department;
 import bulletin_board.beans.User;
+import bulletin_board.dao.UserDao;
 import bulletin_board.service.BranchService;
 import bulletin_board.service.DepartmentService;
 import bulletin_board.service.UserService;
@@ -83,6 +87,7 @@ public class SignUpServlet extends HttpServlet {
 	}
 
 	private boolean isValid (HttpServletRequest request, List<String> messages) {
+
 		String login_id =request.getParameter("login_id");
 		String password = request.getParameter("password");
 		String password_check = request.getParameter("password_check");
@@ -98,6 +103,18 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("ユーザーIDは20文字以下です");
 		}
 
+
+		Connection connection = null;
+		connection = getConnection();
+		UserDao userDao = new UserDao();
+		boolean checkLoginId = userDao.checkLoginId(connection, login_id, 0);
+
+		if(checkLoginId == false){
+			messages.add("入力されたログインIDは既に使用されています");
+		}
+
+
+
 		if (StringUtils.isEmpty(password) == true ) {
 			messages.add("パスワードを入力してください");
 		} else if (StringUtils.length(password) < 6) {
@@ -106,10 +123,8 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("パスワードは255文字以下です");
 		}
 
-		if (StringUtils.isEmpty(password_check) == true ) {
-			messages.add("パスワードを入力してください");
-		} else if (password.equals(password_check) == false) {
-			messages.add("パスワードが違います");
+		if (password.equals(password_check) == false) {
+			messages.add("パスワードが一致しません");
 		}
 
 		if (StringUtils.isEmpty(name) == true ) {
@@ -132,5 +147,6 @@ public class SignUpServlet extends HttpServlet {
 			return false;
 		}
 	}
+
 
 }

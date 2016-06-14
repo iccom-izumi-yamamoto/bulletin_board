@@ -32,11 +32,13 @@ public class LoginServlet extends HttpServlet {
 		String login_id = request.getParameter("login_id");
 		String password = request.getParameter("password");
 
+
+
 		LoginService loginService = new LoginService();
 		User user = loginService.login(login_id, password);
 
 		HttpSession session = request.getSession();
-		if (user != null) {
+		if (user != null && user.getSuspention() == 0) {
 
 			session.setAttribute("loginUser", user);
 			response.sendRedirect("./top");
@@ -46,6 +48,19 @@ public class LoginServlet extends HttpServlet {
 
 			List<String> messages = new ArrayList <String>();
 			messages.add("ログインに失敗しました");
+
+			if (login_id.isEmpty()) {
+				messages.add("ログインIDを入力してください");
+			}
+
+			if (password.isEmpty()) {
+				messages.add("パスワードを入力してください");
+			}
+			if (user != null && user.getSuspention() == 1) {
+				messages.add("停止されたアカウントです");
+			}
+
+
 			session.setAttribute("errorMessages", messages);
 
 			request.getRequestDispatcher("login.jsp").forward(request, response);

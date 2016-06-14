@@ -19,7 +19,7 @@ public class CategoryDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT category FROM bulletin_board.contributions ");
+			sql.append("SELECT category FROM bulletin_board.contributions GROUP BY category DESC ");
 			sql.append("ORDER BY insert_date limit " + limitNum);
 
 			ps = connection.prepareStatement(sql.toString());

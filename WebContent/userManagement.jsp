@@ -14,8 +14,8 @@
 <div class="main-contents">
 
 <c:if test="${loginUser.department_id == 1 }">
-	<a href="signup">◆ ユーザー新規登録</a>　　　
-	<a href="./top">◆ホーム</a><br>
+	<a href="./top">◆ホーム</a>　　　
+	<a href="signup">◆ ユーザー新規登録</a><br>
 <br>
 <br>
 
@@ -23,7 +23,7 @@
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${ errorMessages }" var="message">
-				<li><c:out value="${ message }"/>
+				<c:out value="${ message }"/>
 			</c:forEach>
 		</ul>
 	</div>
@@ -42,6 +42,7 @@
 			<th>部署・役職</th>
 			<th>アカウント状態</th>
 			<th>設定編集</th>
+			<th>アカウント削除</th>
 		</tr>
 		<c:forEach items = "${users }" var = "user">
 		<tr>
@@ -53,20 +54,38 @@
 			<form action="userManagement" method=post>
 				<input name="id" type="hidden" id="id" value="${user.id}"/>
 				<c:choose>
-					<c:when test="${ user.suspention == 0 }"><td>稼動中<input name="submit" type="submit" value="停止"
+					<c:when test="${ user.suspention  == 0 && loginUser.login_id == user.login_id}">
+					<td></td></c:when>
+
+					<c:when test="${ user.suspention == 0  }"><td><input name="submit" type="submit" value="停止"
 							onclick = 'return confirm("${user.name}さん（${user.login_id}）を停止します。\nよろしいですか？");'/></td>
 					</c:when>
-					<c:otherwise><td>停止中<input name="submit" type="submit" value="利用再開"
+					<c:otherwise><td><input name="submit" type="submit" value="利用再開"
 							onclick = 'return confirm("${user.name}さん（${user.login_id}）を再開します。\nよろしいですか？");'/></td>
 
 					</c:otherwise>
 				</c:choose>
+
 			</form>
+
 
 			<form action = "settings" method = "get">
 				<input type = "hidden" name = "id" value="${user.id}" />
-				<td><input class = "submit" id = "submit_button" type = "submit" value = "編集する" /></td>
+				<td><input class = "submit" id = "submit_button" type = "submit" value = "編集" /></td>
 			</form>
+
+
+			<form action="deleteUser" method=post>
+				<c:choose>
+				<c:when test="${loginUser.login_id != user.login_id}">
+				<td><button type = 'submit' name = 'id' value = "${user.id }"
+				onClick = 'return confirm("${user.name}さん（${user.login_id}）を削除します。\nよろしいですか？");'>削除</button></td>
+				</c:when>
+				<c:otherwise><td></td></c:otherwise>
+				</c:choose>
+			</form>
+
+
 
 		</tr>
 		</c:forEach>

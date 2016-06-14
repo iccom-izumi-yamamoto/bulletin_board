@@ -90,15 +90,22 @@ public class SettingServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		User editUser = getEditUser(request);
+		List<Branch> branches = new BranchService().getBranch();
+		request.setAttribute("branches", branches);
+
+		List<Department> departments = new DepartmentService().getDepartment();
+		request.setAttribute("departments", departments);
 
 		if(isValid(request, messages) == true){
 
 			System.out.println("うまくいってる");
 
+
 			new UserService().update(editUser);
 			messages.add("ユーザー情報の編集が完了しました");
 			session.setAttribute("messages", messages);
 			response.sendRedirect("userManagement");
+
 		}else{
 
 			System.out.println("validでてる");
@@ -108,6 +115,9 @@ public class SettingServlet extends HttpServlet {
 			request.getRequestDispatcher("settings.jsp").forward(request, response);
 //			response.sendRedirect("settings");
 		}
+
+
+
 	}
 
 
@@ -152,18 +162,16 @@ public class SettingServlet extends HttpServlet {
 			messages.add("ユーザーIDは20文字以下です");
 		}
 
-		if (StringUtils.isEmpty(password) == true ) {
-			messages.add("パスワードを入力してください");
-		} else if (StringUtils.length(password) < 6) {
-			messages.add("パスワードは6文字以上です");
-		} else if (StringUtils.length(password) > 255) {
-			messages.add("パスワードは255文字以下です");
+		if (!StringUtils.isEmpty(password)) {
+			if (StringUtils.length(password) < 6) {
+				messages.add("パスワードは6文字以上です");
+			} else if (StringUtils.length(password) > 255) {
+				messages.add("パスワードは255文字以下です");
+			}
 		}
 
-		if (StringUtils.isEmpty(passwordCheck) == true ) {
-			messages.add("パスワードを入力してください");
-		} else if (password.equals(passwordCheck) == false) {
-			messages.add("パスワードが違います");
+		if (password.equals(passwordCheck) == false) {
+			messages.add("パスワードが一致しません");
 		}
 
 		if (StringUtils.isEmpty(name) == true ) {

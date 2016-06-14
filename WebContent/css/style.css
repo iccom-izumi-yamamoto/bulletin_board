@@ -8,13 +8,16 @@ body {
 	line-height: 20px;
 	word-break: break-all;
 	padding: 30px;
+		font-weight: bold;
+	font-size:large;
 
 }
+
 
 .login {
 	background:white;
 	width: 600px;
-	padding: 10px;
+	padding: 30px;
 	text-align: center;
 	border: 1px solid #cccccc;
 	margin: 40px auto;
@@ -29,17 +32,52 @@ body {
 	margin: 40px auto;
 }
 
-.messages {
-	text-align: center;
+.commenttitle {
+	font-size:small;
 }
+.message {
+
+	background:white;
+	width: 780px;
+	padding: 10px;
+	text-align: left;
+	border: 1px solid #cccccc;
+	margin: 40px auto;
+}
+
+.commentbox {
+	background:white;
+	width: 800px;
+	padding: 10px;
+	text-align: left;
+	margin: 40px auto;
+
+
+}
+
+.eachComment {
+	background:  #cccccc;
+	width: 750px;
+	padding: 10px;
+	text-align:left;
+	border: 1px solid #cccccc;
+	margin: 10px auto;
+}
+
+.commentbody {
+	font-size:medium;
+	tezt-align :left;
+}
+
 
 .title {
 	font-weight: bold;
-	font-size:x-large;
+	font-size:xx-large;
 }
 
 .body{
 	font-size:large;
+	text-align:left;
 }
 
 .userName {
@@ -58,7 +96,6 @@ body {
 	text-align: center;
 	border: 1px solid #cccccc;
 	margin: 40px auto;
-
 }
 
 .table th {
@@ -82,6 +119,15 @@ body {
 	text-align: center;
 	border: 1px solid #cccccc;
 	margin: 40px auto;
+}
 
+.settings {
+	background:white;
+	width: 600px;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #cccccc;
+	margin: 40px auto;
 
 }
+

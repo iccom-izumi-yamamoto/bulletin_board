@@ -57,7 +57,7 @@ public class CommentDao {
 			ps = connection.prepareStatement(sql.toString());
 
 			ps.setInt(1, id);
-			System.out.println(sql.toString());
+
 
 			ps.executeUpdate();
 		}catch (SQLException e){

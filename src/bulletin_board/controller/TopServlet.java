@@ -87,6 +87,8 @@ public class TopServlet extends HttpServlet {
 			//System.out.println(searchTimeAfter);
 		}
 
+
+
 		User loginuser = (User) request.getSession().getAttribute("loginUser");
 //
 		List<UserMessage> categories = new CategoryService().getSearchCategory();
@@ -109,11 +111,13 @@ public class TopServlet extends HttpServlet {
 			searchTimeAfterYear = request.getParameter("searchTimeAfterYear");
 			searchTimeAfterMonth = request.getParameter("searchTimeAfterMonth");
 			searchTimeAfterDay = request.getParameter("searchTimeAfterDay");
+
+
 			request.setAttribute("messages", searches);
 
 			if (searches.isEmpty()) {
 				List<String> searchmessages = new ArrayList<String>();
-				searchmessages.add("検索結果:該当する記事は0件でした。");
+				searchmessages.add("検索した結果、該当する投稿は0件でした");
 				request.setAttribute("errorMessages", searchmessages);
 			}
 

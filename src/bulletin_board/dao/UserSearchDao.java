@@ -31,73 +31,26 @@ public class UserSearchDao {
 				sql.append( " AND " );
 				sql.append("category = " + "?" );
 
-				System.out.println(searchCategory);
+
 			}
+			sql.append("ORDER BY insert_date DESC " );
 
 			ps = connection.prepareStatement(sql.toString());
-			System.out.println(sql.toString());
+
 
 			ps.setString(1, searchTimeBefore + " 00:00:00");
-			System.out.println(searchTimeBefore);
+
 
 			ps.setString(2, searchTimeAfter + " 23:59:59");
-			System.out.println(searchTimeAfter);
+
 
 
 			if (StringUtils.isNotEmpty(searchCategory)) {
 
 				ps.setString(3, searchCategory);
-				System.out.println(searchCategory);
+
 			}
 
-			//System.out.println(ps.toString());
-
-//			if (!StringUtils.isEmpty(searchCategory) && StringUtils.isEmpty(searchTimeBefore) &&
-//					StringUtils.isEmpty(searchTimeAfter)) {
-//				sql.append("WHERE ");
-//				sql.append("category = \"" + searchCategory + "\" ");
-//
-//			} else if (StringUtils.isEmpty(searchCategory) && !StringUtils.isEmpty(searchTimeBefore) &&
-//					!StringUtils.isEmpty(searchTimeAfter)) {
-//				sql.append("WHERE insert_date BETWEEN \"");
-//				sql.append(searchTimeBefore + " 00:00:00\" AND \"" + searchTimeAfter + " 23:59:59\" " );
-//
-//			} else if (!StringUtils.isEmpty(searchCategory) && !StringUtils.isEmpty(searchTimeBefore) &&
-//					!StringUtils.isEmpty(searchTimeAfter)) {
-//				sql.append("WHERE ");
-//				sql.append("category = \"" + searchCategory + "\" ");
-//				sql.append("AND ");
-//				sql.append("insert_date BETWEEN \"");
-//				sql.append(searchTimeBefore + " 00:00:00\" AND \"" + searchTimeAfter + " 23:59:59\" " );
-//
-//			} else if (!StringUtils.isEmpty(searchCategory) && !StringUtils.isEmpty(searchTimeBefore) &&
-//					StringUtils.isEmpty(searchTimeAfter)) {
-//				sql.append("WHERE ");
-//				sql.append("category = \"" + searchCategory + "\" AND ");
-//				sql.append("insert_date > \"" + searchTimeBefore + " 00:00:00\" ");
-//
-//			} else if (!StringUtils.isEmpty(searchCategory) && StringUtils.isEmpty(searchTimeBefore) &&
-//					!StringUtils.isEmpty(searchTimeAfter)) {
-//				sql.append("WHERE ");
-//				sql.append("category = \"" + searchCategory + "\" AND ");
-//				sql.append("insert_date < \"" + searchTimeAfter + " 00:00:00\" ");
-//
-//			} else if (StringUtils.isEmpty(searchCategory) && !StringUtils.isEmpty(searchTimeBefore) &&
-//					StringUtils.isEmpty(searchTimeAfter)) {
-//				sql.append("WHERE ");
-//				sql.append("insert_date > \"" + searchTimeBefore + " 00:00:00\" ");
-//
-//			} else if (StringUtils.isEmpty(searchCategory) && StringUtils.isEmpty(searchTimeBefore) &&
-//					!StringUtils.isEmpty(searchTimeAfter)) {
-//				sql.append("WHERE ");
-//				sql.append("insert_date < \"" + searchTimeAfter + " 00:00:00\" ");
-//
-//			}
-
-			sql.append("ORDER BY insert_date DESC limit " + limitNum);
-
-
-//			System.out.println(ps);
 
 			ResultSet rs = ps.executeQuery();
 			List<SearchMessage> ret = toUserMessageList(rs);
